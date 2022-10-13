@@ -21,13 +21,31 @@ class Szemely{
 
     public function nevetKeres($szoveg){
         $talalatok = array();
-        echo $sql="SELECT osztyalID FROM `szemelyek`WHERE `nev` LIKE '%$szoveg%'";
-        if ($result = $db->dbSelect($sql)) {
+        $sql="SELECT szemelyid,nev FROM `szemelyek`WHERE `nev` LIKE '%$szoveg%'";
+        if ($result = $this->db->dbSelect($sql)) {
             while($row = $result->fetch_assoc()){
-                $osztalyok[$row['szemelyid']] = $row['nev'];
+                $talalatok[$row['szemelyid']] = $row['nev'];
             }
         }
         return $talalatok;
     }
-}
+
+    public function getOsztaly($szemelyId){
+        $sql = "SELECT `osztyalID` FROM sorok WHERE (";
+        for($i=1;$i<=6;$i++){
+            $sql .= "név$i = ".$szemelyId;
+            if ($i<6){
+                $sql .= " OR ";
+            }
+            else{
+                $sql .= ")";
+            }}
+
+            if ($result = $this->db->dbSelect($sql)) {
+                if($row = $result->fetch_assoc()){
+                    return $row['osztyalID'];
+            }}
+    }
+    }
+
 ?>

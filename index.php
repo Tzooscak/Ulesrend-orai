@@ -22,49 +22,20 @@
     //orai anyag
       $osztalyka = "1";
 
-        
       
-      /*$osztalykasa =  array("13I" => array(
-                          array("Senki","Senki","Senki",null,"Béla","Bujdi"),
-                          array("Beni","Erik","Szabi",null,"Senki","Horvát"),
-                          array("Kori","Tokris","Iványi",null,"Pinyő","ede"),
-                          array(null,null,null,"Tanár úr","Senki","Oláh")
-                      ),
-                      "13CE" => array(
-                          array("Senki","Jozsi","Senki","Sanyi","Kenyér","Laci"),
-                          array("Lisztes","Darco",null,null,"Lajos",null),
-                          array(null,null,"Janos",null,"Mirka","Brika"),
-                          array(null,"Ili","Mili","Tanár úr","Sajtos","Majkos")
-                    )
-      );*/
-      /*foreach($nevek["13I"] as $sor){
-        //foreach($sorok as $tanulo){
-      $sql = "INSERT INTO sorok (osztyalID,név1, név2,név3, név4,név5, név6 ) 
-      VALUES (1,'$sor[0]', '$sor[1]', '$sor[2]', '$sor[3]', '$sor[4]', '$sor[5]')";
-        //}
-      if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
-      } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-      }
-      }
-      foreach($nevek["13CE"] as $sor){
-        //foreach($sorok as $tanulo){
-      $sql = "INSERT INTO sorok (osztyalID,név1, név2,név3, név4,név5, név6 ) 
-      VALUES (2,'$sor[0]', '$sor[1]', '$sor[2]', '$sor[3]', '$sor[4]', '$sor[5]')";
-        //}
-      if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
-      } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-      }
-      }*/
+      
+      
       $osztalyPeldany = new Osztaly($osztalyka,$db);
       $osztalyok = $osztalyPeldany->getALL($db);
       
     $kulcsok=array_keys($osztalyok);
     if(isset($_GET['osztyalID'])){
       $osztalyka = $_GET['osztyalID'];
+    }
+    if (isset($_GET['szemelyId'])){
+      if ($szemelyOszatlya = $szemely->getOsztaly($_GET['szemelyId'])){
+        $osztalyka = $szemelyOszatlya;
+        }
     }
     ?>
 
@@ -79,14 +50,7 @@
 <body>
   <?php
   if(isset($_POST['keresettnev'])){
-    $sql='SELECT osztyalID FROM `szemelyek`
-    INNER JOIN sorok ON `szemelyid` = `sorok`.`név1` OR 
-                          `szemelyid` = `sorok`.`név2` OR 
-                          `szemelyid` = `sorok`.`név3` OR 
-                          `szemelyid` = `sorok`.`név4` OR 
-                          `szemelyid` = `sorok`.`név5` OR 
-                          `szemelyid` = `sorok`.`név6`
-                          WHERE `nev` LIKE "'.$_POST['keresettnev'].'%"';  
+    
 
     if ($result = $db->dbSelect($sql)) {
       $row = $result->fetch_assoc();
@@ -115,7 +79,7 @@
     } 
     if(array_key_exists($osztalyka, $osztalyok)){
       echo '<div class="col-md-12"><div class="elem text-center">Vetitő</div></div>';
-      echo '<form class="elem text-center" method="post" action="'.$_SERVER['PHP_SELF'].'">
+      echo '<form class="elem text-center" method="post" action="lista.php">
         Name: <input type="text" name="keresettnev">
         <input type="submit">
       </form>';
@@ -153,14 +117,23 @@
                     $nev = $szemelySor['nev'];
                   }*/
               }
-                if ($row['név'.$colum] !=null){
-                  if ($row['sorid']==$sajat['sorid'] and $sajat['mezoneve']=='név'.$colum)
-                    echo "<div class='col-md-2'><div class='elem text-center' style='background-color: Blue;' id='bel'><i class='fa-solid fa-desktop fa-5x'></i><span>".$nev."</span></div></div>";
-                  else
-                    echo "<div class='col-md-2'><div class='elem text-center' ' id='bel'><i class='fa-solid fa-desktop fa-5x'></i><span>".$nev."</span></div></div>";
+                
+                  $bg ="";
+                  if(isset($_GET['szemelyId'] )){
+                    if($_GET['szemelyId']== $row[$mezonev])
+                    $bg = "background-color: yellow";
                   }
+                  if ($row['név'.$colum] !=null){
+                  $nev = $szemely->getNev($row[$mezonev],$db);
+                  
+                  if ($row['sorid']==$sajat['sorid'] and $sajat['mezoneve']=='név'.$colum){
+                    echo "<div class='col-md-2'><div class='elem text-center' style='color: blue;$bg' id='bel'><i class='fa-solid fa-desktop fa-5x'></i><span>".$nev."</span></div></div>";
+                  }
+                  else{
+                    echo "<div class='col-md-2'><div class='elem text-center' ' id='bel' style='$bg'><i class='fa-solid fa-desktop fa-5x'></i><span>".$nev."</span></div></div>";
+                  }}
                   else
-                    echo '<div class="col-md-2"></div>';
+                    echo '<div class="col-md-2" ></div>';
             }
            } echo "</div>";
           }else {
