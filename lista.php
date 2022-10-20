@@ -21,11 +21,6 @@
 
     //orai anyag
       $osztalyka = "1";
-
-        
-      
-      
-      
     ?>
 
     <title>találati lista</title>

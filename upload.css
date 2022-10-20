@@ -1,0 +1,28 @@
+
+  body{
+    background: darkgray;
+  }
+  img {
+    
+    width: auto;
+    height: 300px;
+    border: 4px solid black;
+    margin: 3px;
+    
+  }
+  .gallery{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border: 4px solid black;
+    flex-wrap: wrap;
+}
+button{
+    text-align: center;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+    width: 10%;
+    border-radius: 50px;
+}

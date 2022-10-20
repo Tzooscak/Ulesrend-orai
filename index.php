@@ -159,6 +159,15 @@
           else
             echo "sajt";*/
             
+          echo '<form class="elem text-center" method="post" action="upload.php" enctype="multipart/form-data">
+                  <input type="file" name="fileToUpload" id="fileToUpload">
+                  <input type="submit" value="feltölt" name="submit">
+                </form>';
+          echo '<button type="button"><a href="gallery.php">Kép galléria</a><br></button>';
+        
+        
+        
+            
             ?>
         
     </div>
