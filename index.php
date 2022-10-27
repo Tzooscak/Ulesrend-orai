@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -37,8 +40,10 @@
         $osztalyka = $szemelyOszatlya;
         }
     }
-    ?>
+    
 
+    
+    ?>
     <title><?php echo $osztalyok[$osztalyka]; ?></title>
 
     <style>
@@ -48,7 +53,10 @@
     </style>
 </head>
 <body>
+  
   <?php
+
+  
   if(isset($_POST['keresettnev'])){
     
 
@@ -66,7 +74,19 @@
   
   //SELECT * FROM `szemelyek`
   //INNER JOIN sorok ON (szemelyek.nev = sorok.név1 OR szemelyek.nev = sorok.név2 OR szemelyek.nev = sorok.név3 OR szemelyek.nev = sorok.név4 OR szemelyek.nev = sorok.név5 OR szemelyek.nev = sorok.név6) WHERE szemelyek.nev LIKE "ede"
-    if(isset($_GET['osztyalID'])){
+  if (isset($_SESSION['id'])) {
+    echo "<button><a href='belep.php?kilepes=1'>KILEPES</a></button>";
+    printf("<img style='display: inline;' class='shadow' src='uploads/".$_SESSION['id'].".png'>");
+    echo "<div style='display: inline;'>üdv néged senkiházi ".$_SESSION['nev']." !</div>";
+    
+  }else{
+    echo "<button><a href='belep.php'>BELÉPÉS</a></button>";
+  }
+  $target_dir = "uploads/";
+  $target_file = $target_dir . $_SESSION['id'].".png";
+  
+
+  if(isset($_GET['osztyalID'])){
         $osztalyka = $_GET['osztyalID'];
       }
   foreach($osztalyok as $kulcs => $ertek){
