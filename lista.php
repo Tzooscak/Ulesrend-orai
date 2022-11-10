@@ -15,9 +15,9 @@
       
       $db = new DataBase();
 
-      require 'szemely.php';
+      require 'model/szemely.php';
       $szemely = new Szemely($db);
-      require 'Osztaly.php';
+      require 'model/Osztaly.php';
 
     //orai anyag
       $osztalyka = "1";

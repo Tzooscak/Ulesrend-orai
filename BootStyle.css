@@ -29,3 +29,6 @@ button{
     border: 2px solid #cddc39;
     filter: drop-shadow(0 0 8px #ff5722);
 }
+span {
+    display:block;
+  }
