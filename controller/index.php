@@ -46,7 +46,7 @@
     $sql = "SELECT sorid,név1,név2,név3,név4,név5,név6 FROM `sorok` Where osztyalID=".$osztalyka;
     $result = $db->dbSelect($sql);
           
-    require './view/index.php';      
+    require './view/Index1/index.php';      
     ?>
         
     </div>

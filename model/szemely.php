@@ -46,6 +46,15 @@ class Szemely{
                     return $row['osztyalID'];
             }}
     }
+
+    /*public function getOsztaly($szemelyId): array {
+        if($result = $this->db->dbSelect('SELECT * FROM sorok INNER JOIN osztalyok ON sorok.osztyalID = osztalyok.osztyalID WHERE szemelyid = "'.$szemelyId.'"')) {
+            $row = $result->fetch_assoc();
+            return [$row['szemelyid'] => $row['OsztalyNev']];
+        } else {
+            return [];
+        }
+    }*/
     public function checkLogin($felhNev, $jelszo){
             $sql='SELECT * FROM `szemelyek` WHERE felhasznaloNev ="'.$felhNev.'"';
                 //van e ilyen nevü felhasználó?
