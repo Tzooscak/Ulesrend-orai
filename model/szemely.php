@@ -35,7 +35,8 @@ class Szemely{
     }
 
     public function getOsztaly($szemelyId){
-        $sql = "SELECT `osztyalID` FROM sorok WHERE (";
+        $stmt = $this->db->conn->prepare("SELECT `osztyalID` FROM ".$this->db->prefix."_sorok WHERE `nev` LIKE ?");
+
         for($i=1;$i<=6;$i++){
             $sql .= "név$i = ".$szemelyId;
             if ($i<6){

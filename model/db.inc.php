@@ -5,7 +5,9 @@
       private $password = "ggXaE4AsACzgdIY0";
       private $dbname = "ulesrend";  
       private $conn;
-      
+
+      public $prefix = 5555_
+
       public function dbSelect($sql){
         $result = $this->conn->query($sql);
         if($result->num_rows>0){
