@@ -9,21 +9,25 @@ class Szemely{
         $this->db = $db;
     }
     public function getNev($szemelyid, $db){
-        $sql = "SELECT nev FROM `szemelyek` Where szemelyid=".$szemelyid;
-                  if ($resultnev = $db->dbSelect($sql)){     
+        $stmt = $this->db->conn->prepare("SELECT nev FROM ".$this->db->prefix."_szemelyek Where szemelyid= ?");
+        if ($stmt->bind_param('i',$szemelyid) === true){
+            $stmt->execute();
+                  if ($resultnev = $stmt->get_result()){
                     $szemelySor = $resultnev->fetch_assoc();
                     $this->nev = $szemelySor['nev'];
                     $this->szemelyid = $szemelyid;
                   }
         return $this->nev;
     }
+    }
 
 
     public function nevetKeres($szoveg){
         $talalatok = array();
-        $sql="SELECT szemelyid,nev FROM `szemelyek`WHERE `nev` LIKE '%$szoveg%'";
-        if ($result = $this->db->dbSelect($sql)) {
-            while($row = $result->fetch_assoc()){
+        $stmt = $this->db->conn->prepare("SELECT szemelyid,nev FROM ".$this->db->prefix."_szemelyek WHERE `nev` LIKE ?");
+        if ($stmt->bind_param('s',$szoveg) === true) {
+            $stmt->execute();
+            while($row = $stmt->fetch_assoc()){
                 $talalatok[$row['szemelyid']] = $row['nev'];
             }
         }
